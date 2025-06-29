@@ -1,0 +1,907 @@
+/* ==========================================================================
+   Image Editor Styles
+   ========================================================================== */
+
+/* Layout Components */
+.dash-panel {
+    display: flex;
+    flex-direction: row;
+    gap: 0; /* Remove any gap between the children */
+    width: 100%;
+    height: 100%;
+}
+
+.main-div {
+    display: flex;
+    flex-direction: row;
+    margin-left: 64px; /* Match the width of the side-option toolbar */
+    width: calc(100% - 64px); /* Adjust width to account for the side toolbar */
+    height: 100vh;
+}
+
+.left-panel {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+}
+
+.right-panel {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* ==========================================================================
+   Image Editor Container
+   ========================================================================== */
+
+.image-editor-container {
+    width: 100%;
+    height: 100%;
+    background: #1a1f2e;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   Toolbar
+   ========================================================================== */
+
+.toolbar {
+    padding: 12px 16px;
+    background: #1a1f2e;
+    border-bottom: 1px solid #2a3441;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.toolbar-btn {
+    background: transparent;
+    border: none;
+    color: #8b9cb5;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar-btn:hover {
+    background: #2a3441;
+    color: #ffffff;
+}
+
+.toolbar-btn.close-btn:hover {
+    background: #e74c3c;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   Main Content Area
+   ========================================================================== */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Removed padding to eliminate white space */
+    min-height: 0;
+    max-height: calc(100vh - 150px); /* Reserve space for toolbar and history tabs */
+    overflow: hidden; /* Prevent content from overflowing */
+}
+
+.upload-container {
+    width: 100%; /* Full width */
+    max-width: none; /* Remove max-width constraint */
+    height: calc(100vh - 150px); /* Fixed height to ensure history buttons are visible */
+    max-height: calc(100vh - 150px); /* Ensure it doesn't grow too large */
+    border: 2px dashed #4a5568;
+    border-radius: 0; /* Remove border radius for full edge-to-edge appearance */
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-container:hover,
+.upload-container.drag-over {
+    border-color: #805ad5;
+    background: linear-gradient(135deg, #553c9a 0%, #805ad5 100%);
+    transform: none; /* Remove scale transform to prevent overflow */
+}
+
+.upload-container.drag-over {
+    border-style: solid;
+}
+
+.upload-area {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.upload-icon {
+    margin-bottom: 16px;
+}
+
+.upload-icon svg {
+    color: #8b9cb5;
+}
+
+.upload-text {
+    color: #a0aec0;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.image-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* ==========================================================================
+   Bottom Tabs
+   ========================================================================== */
+
+.bottom-tabs {
+    background: #1a1f2e;
+    border-top: 1px solid #2a3441;
+    padding: 0 16px 16px;
+    min-height: 80px; /* Ensure minimum height for the tabs */
+    margin-top: auto; /* Push to the bottom of the container */
+}
+
+.tabs-header {
+    padding: 12px 0 8px;
+}
+
+.history-label {
+    color: #8b9cb5;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.tabs-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.tabs-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.tabs-container::-webkit-scrollbar-track {
+    background: #2a3441;
+    border-radius: 2px;
+}
+
+.tabs-container::-webkit-scrollbar-thumb {
+    background: #4a5568;
+    border-radius: 2px;
+}
+
+.tab-btn {
+    background: #2a3441;
+    border: none;
+    color: #8b9cb5;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tab-btn:hover {
+    background: #4a5568;
+    color: #ffffff;
+}
+
+.tab-btn.active {
+    background: #805ad5;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   Right Editor Panel
+   ========================================================================== */
+
+.editor-panel {
+    position: relative; /* Changed from fixed to relative */
+    height: 100vh;
+    width: 400px;
+    background: #1C273A;
+    color: #ecf0f1;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   Tab Navigation
+   ========================================================================== */
+
+.tab-navigation {
+    display: flex;
+    background: #34495e;
+    border-bottom: 1px solid #4a5f7a;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 16px 12px;
+    background: transparent;
+    border: none;
+    color: #95a5a6;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-button.active {
+    color: #ecf0f1;
+    background: #1C273A;
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #3498db;
+}
+
+/* ==========================================================================
+   Tab Content
+   ========================================================================== */
+
+.tab-content {
+    padding: 20px;
+    min-height: 400px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+.section-title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ecf0f1;
+}
+
+/* Custom scrollbar */
+.tab-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+    background: #34495e;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+    background: #4a5f7a;
+    border-radius: 3px;
+}
+
+.tab-content::-webkit-scrollbar-thumb:hover {
+    background: #5d6d7e;
+}
+
+/* ==========================================================================
+   Effects Tab Styles
+   ========================================================================== */
+
+.effects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.effect-button {
+    background: #34495e;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 20px 12px;
+    color: #ecf0f1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.effect-button:hover {
+    background: #4a5f7a;
+    transform: translateY(-2px);
+}
+
+.effect-button.active {
+    border-color: #3498db;
+    background: #4a5f7a;
+}
+
+.effect-button i {
+    font-size: 20px;
+}
+
+/* Custom Filters */
+.custom-filters {
+    margin-top: 8px;
+}
+
+.filter-item {
+    border: 1px solid #4a5f7a;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.filter-header {
+    width: 100%;
+    padding: 16px;
+    background: #34495e;
+    border: none;
+    color: #ecf0f1;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.filter-header:hover {
+    background: #4a5f7a;
+}
+
+.filter-header .icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.filter-header .icon.rotated {
+    transform: rotate(45deg);
+}
+
+.filter-content {
+    padding: 16px;
+    background: #1C273A;
+}
+
+/* ==========================================================================
+   Layers Tab Styles
+   ========================================================================== */
+
+.layers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.layer-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    background: #34495e;
+    border: none;
+    border-radius: 6px;
+    color: #ecf0f1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+    background: #4a5f7a;
+}
+
+.layers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.layer-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #34495e;
+    border-radius: 8px;
+    gap: 12px;
+}
+
+.layer-thumbnail {
+    width: 40px;
+    height: 40px;
+    background: #4a5f7a;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.layer-info {
+    flex: 1;
+}
+
+.layer-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.layer-details {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: #95a5a6;
+}
+
+.layer-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.visibility-btn,
+.lock-btn {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.visibility-btn:hover,
+.lock-btn:hover {
+    background: #4a5f7a;
+}
+
+.visibility-btn.hidden {
+    opacity: 0.5;
+}
+
+/* ==========================================================================
+   Adjustments Tab Styles
+   ========================================================================== */
+
+.adjustment-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.adjustment-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.adjustment-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.adjustment-header label {
+    flex: 1;
+}
+
+.adjustment-header .value {
+    font-weight: 600;
+    color: #3498db;
+}
+
+/* Slider Styles */
+.adjustment-slider,
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #4a5f7a;
+    outline: none;
+    cursor: pointer;
+}
+
+.adjustment-slider::-webkit-slider-thumb,
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.adjustment-slider::-moz-range-thumb,
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.slider-container {
+    padding: 8px 0;
+}
+
+.apply-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(142, 68, 173, 0.3);
+}
+
+/* ==========================================================================
+   Responsive Design - Tablet
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .main-div {
+        margin-left: 60px; /* Match the tablet width of the side-option toolbar */
+        width: calc(100% - 60px);
+    }
+    
+    .editor-panel {
+        width: 350px;
+        height: 100vh;
+    }
+    
+    .dash-panel {
+        flex-wrap: nowrap;
+    }
+}
+
+/* ==========================================================================
+   Responsive Design - Mobile
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Toolbar adjustments */
+    .toolbar {
+        padding: 8px 12px;
+    }
+
+    .toolbar-btn {
+        padding: 6px;
+    }
+
+    .toolbar-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Main content adjustments */
+    .main-content {
+        padding: 0; /* Keep zero padding for mobile too */
+    }
+
+    .upload-container {
+        max-height: none; /* Remove height constraint */
+        border-radius: 0; /* Keep no border radius */
+    }
+
+    .upload-area {
+        padding: 30px 16px;
+    }
+
+    .upload-icon svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .upload-text {
+        font-size: 14px;
+    }
+
+    /* Bottom tabs adjustments */
+    .bottom-tabs {
+        padding: 0 12px 12px;
+    }
+
+    .tab-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    /* Layout adjustments */
+    .main-div {
+        margin-left: 56px; /* Match the mobile width of the side-option toolbar */
+        width: calc(100% - 56px);
+    }
+    
+    .main-content {
+        max-height: calc(100vh - 130px); /* Adjust for smaller screens */
+    }
+    
+    .upload-container {
+        height: calc(100vh - 130px);
+        max-height: calc(100vh - 130px);
+    }
+    
+    /* Editor panel adjustments */
+    .dash-panel {
+        flex-direction: column;
+    }
+    
+    .left-panel, .right-panel {
+        width: 100%;
+    }
+    
+    .editor-panel {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 500px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-content {
+        max-height: calc(100vh - 60px);
+    }
+
+    .effects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .effect-button {
+        padding: 16px 8px;
+        font-size: 12px;
+    }
+
+    .tab-button {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+}
+
+/* ==========================================================================
+   Responsive Design - Small Mobile
+   ========================================================================== */
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .main-div {
+        margin-left: 48px; /* Match the very small screen width of the side-option toolbar */
+        width: calc(100% - 48px);
+    }
+}
+
+@media (max-width: 480px) {
+    /* Layout */
+    .main-div {
+        margin-left: 52px; /* Match the small mobile width of the side-option toolbar */
+        width: calc(100% - 52px);
+    }
+    
+    .main-content {
+        max-height: calc(100vh - 120px); /* Further reduce for smaller screens */
+    }
+    
+    .upload-container {
+        height: calc(100vh - 120px);
+        max-height: calc(100vh - 120px);
+    }
+    
+    /* Toolbar */
+    .toolbar {
+        padding: 6px 8px;
+    }
+
+    .toolbar-actions {
+        gap: 4px;
+    }
+
+    .toolbar-btn {
+        padding: 4px;
+    }
+
+    .toolbar-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Main content */
+    .main-content {
+        padding: 0; /* Keep zero padding */
+    }
+
+    .upload-container {
+        max-height: none; /* Remove height constraint */
+        border-width: 1px;
+        border-radius: 0; /* Keep no border radius */
+    }
+
+    .upload-area {
+        padding: 20px 12px;
+    }
+
+    .upload-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .upload-text {
+        font-size: 13px;
+    }
+
+    /* Bottom tabs */
+    .bottom-tabs {
+        padding: 0 8px 8px;
+    }
+
+    .tabs-header {
+        padding: 8px 0 6px;
+    }
+
+    .history-label {
+        font-size: 11px;
+    }
+
+    .tab-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    /* Effects grid */
+    .effects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .layer-item {
+        padding: 8px;
+    }
+
+    .adjustment-controls {
+        gap: 16px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .main-div {
+        margin-left: 48px; /* Match the very small screen width of the side-option toolbar */
+        width: calc(100% - 48px);
+    }
+}
+
+/* ==========================================================================
+   Very Small Screen Adjustments
+   ========================================================================== */
+
+@media (max-width: 320px) {
+    .main-content {
+        max-height: calc(100vh - 110px); /* Even smaller for tiny screens */
+    }
+    
+    .upload-container {
+        height: calc(100vh - 110px);
+        max-height: calc(100vh - 110px);
+    }
+    
+    .bottom-tabs {
+        min-height: 70px; /* Smaller minimum height for tiny screens */
+        padding: 0 12px 12px;
+    }
+}
+
+/* ==========================================================================
+   Responsive Design - Large Screens
+   ========================================================================== */
+
+@media (min-width: 1200px) {
+    .upload-container {
+        max-width: none; /* Remove max-width constraint */
+        max-height: none; /* Remove max-height constraint */
+    }
+
+    .upload-area {
+        padding: 60px 40px;
+    }
+
+    .upload-icon svg {
+        width: 64px;
+        height: 64px;
+    }
+
+    .upload-text {
+        font-size: 18px;
+    }
+}
+
+/* ==========================================================================
+   High DPI Displays
+   ========================================================================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .upload-container {
+        border-width: 1px;
+    }
+}
+
+/* ==========================================================================
+   High Contrast Mode
+   ========================================================================== */
+
+@media (prefers-contrast: high) {
+    .upload-container {
+        border-color: #ffffff;
+        background: linear-gradient(135deg, #000000 0%, #2a3441 100%);
+    }
+
+    .tab-btn.active {
+        background: #ffffff;
+        color: #000000;
+    }
+}

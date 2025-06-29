@@ -1,0 +1,343 @@
+/* toolbar.component.scss */
+
+.toolbar {
+  position: fixed;
+  left: 0;
+  top: 60px; // Assuming header height
+  height: calc(100vh - 60px);
+  width: 64px;
+  background: #1C273A;
+  border-right: 1px solid #3a4550;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.toolbar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px 0;
+}
+
+.toolbar-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 8px;
+}
+
+.tool-button {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #b8c5d1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #4a5568;
+    color: #ffffff;
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateX(2px) scale(0.95);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.5);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 2px 12px rgba(102, 126, 234, 0.4);
+
+    &:hover {
+      background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+      transform: translateX(2px);
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.5);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 0 2px 2px 0;
+    }
+  }
+
+  &.has-submenu::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+}
+
+.tool-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.tool-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+// Scrollbar styling for overflow
+.toolbar-tools {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Tablet responsive
+@media (max-width: 1024px) {
+  .toolbar {
+    width: 60px;
+  }
+
+  .tool-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .toolbar-tools {
+    padding: 0 6px;
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .toolbar {
+    width: 56px;
+    top: 56px;
+    height: calc(100vh - 56px);
+  }
+
+  .toolbar-tools {
+    padding: 0 4px;
+    gap: 2px;
+  }
+
+  .tool-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+
+    &:hover {
+      transform: none;
+    }
+
+    &.active {
+      &:hover {
+        transform: none;
+      }
+
+      &::before {
+        left: -4px;
+        width: 2px;
+        height: 20px;
+      }
+    }
+  }
+
+  .tool-icon {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar {
+    width: 52px;
+    top: 52px;
+    height: calc(100vh - 52px);
+  }
+
+  .toolbar-container {
+    padding: 8px 0;
+  }
+
+  .toolbar-tools {
+    padding: 0 2px;
+  }
+
+  .tool-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+
+    &.active::before {
+      height: 16px;
+    }
+  }
+
+  .tool-icon {
+    font-size: 12px;
+  }
+
+  .tool-button.has-submenu::after {
+    width: 4px;
+    height: 4px;
+    bottom: 4px;
+    right: 4px;
+  }
+}
+
+// Hide toolbar on very small screens
+@media (max-width: 320px) {
+  .toolbar {
+    width: 48px;
+  }
+
+  .tool-button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+// Dark mode enhancements
+@media (prefers-color-scheme: dark) {
+  .toolbar {
+    background: #1C273A;
+    border-right-color: #2a3441;
+  }
+
+  .tool-button {
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .toolbar {
+    border-right: 2px solid #ffffff;
+    background: #000000;
+  }
+
+  .tool-button {
+    border-width: 2px;
+    color: #ffffff;
+
+    &:hover {
+      border-color: #ffffff;
+      background: #333333;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8);
+    }
+
+    &.active {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .tool-button {
+    transition: background-color 0.1s ease, color 0.1s ease;
+
+    &:hover,
+    &.active:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .toolbar {
+    display: none;
+  }
+}
+
+// Focus management for keyboard navigation
+.toolbar-tools {
+  &:focus-within {
+    .tool-button:focus {
+      z-index: 1;
+    }
+  }
+}
+
+// Animation for active state
+@keyframes toolActivate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.tool-button.active {
+  animation: toolActivate 0.2s ease-out;
+}
