@@ -1,11 +1,9 @@
-/* header.component.scss */
-
 * {
   box-sizing: border-box;
 }
 
 .header {
-  background: linear-gradient(135deg, #2a3441 0%, #1e2832 100%);
+  background: #1C273A;
   border-bottom: 1px solid #3a4550;
   padding: 0 20px;
   height: 60px;
@@ -417,7 +415,7 @@
 // Dark mode enhancements
 @media (prefers-color-scheme: dark) {
   .header {
-    background: linear-gradient(135deg, #1a1f2b 0%, #0f1419 100%);
+    background: #1C273A;
     border-bottom-color: #2a3441;
   }
   

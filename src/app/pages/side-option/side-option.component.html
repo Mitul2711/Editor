@@ -1,0 +1,21 @@
+<!-- toolbar.component.html -->
+<aside class="toolbar">
+  <div class="toolbar-container">
+    <div class="toolbar-tools">
+      <button
+        *ngFor="let tool of tools"
+        class="tool-button"
+        [class.active]="isToolActive(tool.id)"
+        [class.has-submenu]="tool.hasSubmenu"
+        [title]="tool.tooltip"
+        [attr.aria-label]="tool.tooltip"
+        [attr.aria-pressed]="isToolActive(tool.id)"
+        (click)="onToolSelect(tool.id)"
+        (dblclick)="onToolDoubleClick(tool.id)"
+        (contextmenu)="onToolRightClick($event, tool.id)">
+        <span class="tool-icon">{{ tool.icon }}</span>
+        <span class="tool-indicator" *ngIf="tool.hasSubmenu"></span>
+      </button>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,197 @@
+<app-side-option></app-side-option>
+
+<div class="main-div">
+    <section class="dash-panel">
+        <div class="left-panel">
+            <div class="image-editor-container">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div class="toolbar-actions">
+                        <button class="toolbar-btn" (click)="onUndo()" title="Undo">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M3 7v6h6" />
+                                <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
+                            </svg>
+                        </button>
+
+                        <button class="toolbar-btn" (click)="onRedo()" title="Redo">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 7v6h-6" />
+                                <path d="M3 17a9 9 0 019-9 9 9 0 016 2.3L21 13" />
+                            </svg>
+                        </button>
+
+                        <button class="toolbar-btn" (click)="onCopy()" title="Copy">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                            </svg>
+                        </button>
+
+                        <button class="toolbar-btn close-btn" (click)="onClose()" title="Close">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content">
+                    <!-- Upload Area -->
+                    <div class="upload-container" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)"
+                        (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="onUploadClick()">
+
+                        <div class="upload-area" *ngIf="!imagePreview">
+                            <div class="upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                    <polyline points="7,10 12,15 17,10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                            </div>
+                            <p class="upload-text">Drop your image here or click to upload</p>
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div class="image-preview" *ngIf="imagePreview">
+                            <img [src]="imagePreview" alt="Preview" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Tabs -->
+                <div class="bottom-tabs">
+                    <div class="tabs-header">
+                        <span class="history-label">HISTORY</span>
+                    </div>
+                    <div class="tabs-container">
+                        <button *ngFor="let tab of tabs" class="tab-btn" [class.active]="tab.active"
+                            (click)="selectTab(tab.id)">
+                            {{ tab.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hidden file input -->
+                <input #fileInput type="file" accept="image/*" (change)="onFileSelect($event)" style="display: none;">
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="editor-panel">
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button *ngFor="let tab of rightTabs" [class.active]="activeTab === tab.key"
+                        (click)="setActiveTab(tab.key)" class="tab-button">
+                        {{ tab.label }}
+                    </button>
+                </div>
+
+                <!-- Effects Tab -->
+                <div *ngIf="activeTab === 'effects'" class="tab-content effects-tab">
+                    <h3 class="section-title">Effects</h3>
+                    <div class="effects-grid">
+                        <button *ngFor="let effect of effects" class="effect-button"
+                            [class.active]="selectedEffect === effect.name" (click)="selectEffect(effect.name)">
+                            <i [class]="effect.icon"></i>
+                            <span>{{ effect.name }}</span>
+                        </button>
+                    </div>
+
+                    <h3 class="section-title">Custom Filters</h3>
+                    <div class="custom-filters">
+                        <div *ngFor="let filter of customFilters" class="filter-item">
+                            <button class="filter-header" (click)="toggleFilter(filter.name)">
+                                <span>{{ filter.name }}</span>
+                                <i class="icon" [class.rotated]="filter.expanded">+</i>
+                            </button>
+                            <div *ngIf="filter.expanded" class="filter-content">
+                                <!-- Filter controls would go here -->
+                                <div class="slider-container">
+                                    <input type="range" min="0" max="100" value="50" class="slider">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layers Tab -->
+                <div *ngIf="activeTab === 'layers'" class="tab-content layers-tab">
+                    <div class="layers-header">
+                        <h3 class="section-title">Layers</h3>
+                        <div class="layer-actions">
+                            <button class="action-btn" (click)="addLayer()">+</button>
+                            <button class="action-btn" (click)="deleteLayer()">🗑</button>
+                        </div>
+                    </div>
+
+                    <div class="layers-list">
+                        <div *ngFor="let layer of layers; trackBy: trackByLayer" class="layer-item">
+                            <div class="layer-thumbnail"></div>
+                            <div class="layer-info">
+                                <div class="layer-name">{{ layer.name }}</div>
+                                <div class="layer-details">
+                                    <span class="opacity">{{ layer.opacity }}%</span>
+                                    <span class="blend-mode">{{ layer.blendMode }}</span>
+                                </div>
+                            </div>
+                            <div class="layer-controls">
+                                <button class="visibility-btn" [class.hidden]="!layer.visible"
+                                    (click)="toggleLayerVisibility(layer.name)">
+                                    {{ layer.visible ? '👁' : '🚫' }}
+                                </button>
+                                <button class="lock-btn">🔒</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adjustments Tab -->
+                <div *ngIf="activeTab === 'adjustments'" class="tab-content adjustments-tab">
+                    <h3 class="section-title">Adjustments</h3>
+
+                    <div class="adjustment-controls">
+                        <div class="adjustment-item">
+                            <div class="adjustment-header">
+                                <i class="brightness-icon">☀️</i>
+                                <label>Brightness</label>
+                                <span class="value">{{ brightness }}</span>
+                            </div>
+                            <input type="range" min="-100" max="100" [(ngModel)]="brightness" class="adjustment-slider">
+                        </div>
+
+                        <div class="adjustment-item">
+                            <div class="adjustment-header">
+                                <i class="contrast-icon">⚪</i>
+                                <label>Contrast</label>
+                                <span class="value">{{ contrast }}</span>
+                            </div>
+                            <input type="range" min="-100" max="100" [(ngModel)]="contrast" class="adjustment-slider">
+                        </div>
+
+                        <div class="adjustment-item">
+                            <div class="adjustment-header">
+                                <i class="saturation-icon">🎨</i>
+                                <label>Saturation</label>
+                                <span class="value">{{ saturation }}</span>
+                            </div>
+                            <input type="range" min="-100" max="100" [(ngModel)]="saturation" class="adjustment-slider">
+                        </div>
+                    </div>
+
+                    <button class="apply-btn" (click)="applyAdjustments()">
+                        Apply Adjustments
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
